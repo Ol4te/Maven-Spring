@@ -1,0 +1,23 @@
+services:
+  db:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: secreto
+      MYSQL_DATABASE: control_emprestimos
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-psecreto"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      DB_URL: jdbc:mysql://db:3306/control_emprestimos?serverTimezone=UTC
+      DB_USER: root
+      DB_PASSWORD: secreto
+    depends_on:
+      db:
+        condition: service_healthy
