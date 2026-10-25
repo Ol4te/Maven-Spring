@@ -39,8 +39,21 @@ public class EmprestimoController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Emprestimo> actualizarEmprestimo(@RequestBody Emprestimo emprestimo, @PathVariable Long id){
-        Emprestimo actualizado = service.actualizarEmprestimo(emprestimo, id);
-        if(actualizado == null) return ResponseEntity.notFound().build(); 
+        Emprestimo buscado = service.actualizarEmprestimo(emprestimo, id);
+        if(buscado == null) return ResponseEntity.notFound().build();
+        emprestimo.setId(buscado.getId());
+        return ResponseEntity.ok(buscado);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> borrarEmprestimo(@PathVariable Long id){
+        service.borrarEmprestimo(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/retrasados")
+    public ResponseEntity<List<Emprestimo>> buscarPorRetrasado(@RequestParam(defaultValue = "true") Boolean retrasado){
+        return ResponseEntity.ok(service.buscarPorRetrasado(retrasado));
     }
 
 }

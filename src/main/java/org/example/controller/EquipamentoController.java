@@ -23,10 +23,11 @@ public class EquipamentoController {
         return ResponseEntity.ok(service.listarTodos());
     }
 
+
     @PostMapping
     public ResponseEntity<Equipamento> añadirEquipamiento(@RequestBody Equipamento equipamento){
         Equipamento nuevo = service.añadirEquipamiento(equipamento);
-        return ResponseEntity.status(201).body(equipamento);
+        return ResponseEntity.status(201).body(nuevo);
     }
 
     @GetMapping("/{id}")
@@ -49,7 +50,7 @@ public class EquipamentoController {
 
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<Equipamento> borrarEquipamiento(@PathVariable Long id){
+    public ResponseEntity<Void> borrarEquipamiento(@PathVariable Long id){
         service.borrarEquipamiento(id);
         return ResponseEntity.noContent().build();
     }

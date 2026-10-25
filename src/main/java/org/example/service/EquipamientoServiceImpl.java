@@ -48,6 +48,7 @@ public class EquipamientoServiceImpl implements InterfazEquipamientoService {
         repository.deleteById(id);
     }
 
+    @Override
     public List<Equipamento> buscarPorEstado(Equipamento.EstadoEquipamento estado){
         return repository.findByEstado(estado);
     }
